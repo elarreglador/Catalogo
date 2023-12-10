@@ -17,11 +17,16 @@ let titulo = document.getElementById('titulo');
 let alias = document.getElementById('alias');
 let nombre = document.getElementById('nombre');
 let apellidos = document.getElementById('apellidos');
+let nacimiento = document.getElementById('nacimiento')
 let email = document.getElementById('email');
 let telf = document.getElementById('telf');
 let rrss = document.getElementById('rrss');
 let dni = document.getElementById('dni');
 let direccion = document.getElementById('direccion');
+let notas = document.getElementById('notas');
+let impresiones = document.getElementById('impresiones');
+let experiencia = document.getElementById('experiencia');
+let intereses = document.getElementById('intereses');
 let rutaGaleria = document.getElementById('rutaGaleria');
 let ruta = "";
 
@@ -58,11 +63,16 @@ function actualiza() {
   titulo.innerHTML = alias.value;
   nombre.value = miArray[pos].nombre;
   apellidos.value = miArray[pos].apellidos;
+  nacimiento.value = miArray[pos].nacimiento;
   email.value = miArray[pos].email;
   telf.value = miArray[pos].telf;
   rrss.value = miArray[pos].rrss;
   dni.value = miArray[pos].dni;
   direccion.value = miArray[pos].direccion;
+  notas.value = miArray[pos].notas;
+  impresiones.value = miArray[pos].impresiones;
+  experiencia.value = miArray[pos].experiencia;
+  intereses.value = miArray[pos].intereses;
   ruta = miArray[pos].ruta;
   rutaGaleria.innerHTML = ruta;
 
@@ -224,6 +234,22 @@ function mostrarEnGrande(filePath, extension) {
 }
 
 
+function validaFecha() {
+  const inputFecha = document.getElementById('nacimiento');
+  const formatoFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+
+  if (!formatoFecha.test(inputFecha.value)) {
+    // El formato no es correcto, mostrar mensaje de error
+    nacimiento.style.backgroundColor = 'red';
+    alert("Formato de fecha incorrecto. Debe ser dd/mm/yyyy.");
+    return false;
+  } else {
+    nacimiento.style.backgroundColor = 'white';
+    return false;
+  }
+}
+
+
 
 
 //LISTENERS
@@ -260,16 +286,21 @@ botonNuevo.addEventListener('click', () => {
     "alias": alias.value,
     "nombre": nombre.value,
     "apellidos": apellidos.value,
+    "nacimiento": nacimiento.value,
     "email": email.value,
     "telf": telf.value,
     "rrss": rrss.value,
     "dni": dni.value,
     "direccion": direccion.value,
+    "notas": notas.value,
+    "impresiones": impresiones.value,
+    "experiencia": experiencia.value,
+    "intereses": intereses.value,
     "ruta": ruta
   };
 
   //en pos no elimino nada y agrego persona
-  miArray.splice(pos,0,persona)
+  miArray.splice(pos, 0, persona)
   // Crea la carpeta multimedia de la persona
   if (!fs.existsSync(ruta)) {
     fs.mkdirSync(ruta);
@@ -286,15 +317,20 @@ botonGuardar.addEventListener('click', () => {
     "alias": alias.value,
     "nombre": nombre.value,
     "apellidos": apellidos.value,
+    "nacimiento": nacimiento.value,
     "email": email.value,
     "telf": telf.value,
     "rrss": rrss.value,
     "dni": dni.value,
     "direccion": direccion.value,
+    "notas": notas.value,
+    "impresiones": impresiones.value,
+    "experiencia": experiencia.value,
+    "intereses": intereses.value,
     "ruta": ruta
   };
   //en pos elimino uno y agrego persona
-  miArray.splice(pos,1,persona)
+  miArray.splice(pos, 1, persona)
   // Crea la carpeta multimedia de la persona
   if (!fs.existsSync(ruta)) {
     fs.mkdirSync(ruta);
@@ -351,4 +387,8 @@ botonBorrar.addEventListener('click', () => {
     actualiza();
     guarda();
   }
+})
+
+nacimiento.addEventListener('change', () => {
+  validaFecha();
 })

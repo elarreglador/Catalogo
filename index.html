@@ -22,6 +22,8 @@
                     Nombre / Apellidos<br>
                     <input type="texto" id="nombre" style="width: 99%;"><br>
                     <input type="texto" id="apellidos" style="width: 99%;"><br>
+                    Fecha nacimiento<br>
+                    <input type="texto" id="nacimiento" style="width: 99%;"><br>
                     email<br>
                     <input type="texto" id="email" style="width: 99%;"><br>
                     Telefono<br>
@@ -37,17 +39,27 @@
                         cambios</button>
                     
                 </div>
-                <div class="pane" style="text-align: left;">
-                    <p id="rutaGaleria" style="text-align: left;"></p>
-                    <button id="botonAbrirCarpeta" class="btn btn-positive">📂 Abrir carpeta multimedia</button>
+                <div class="pane" style="text-align: center;">
+                    <div style="text-align: left;">
+                        Notas<br>
+                        <textarea id="notas" rows="3" cols="50" style="width: 99%;"></textarea><br>
+                        Impresiones<br>
+                        <textarea id="impresiones" rows="3" cols="50" style="width: 99%;"></textarea><br>
+                        Experiencia<br>
+                        <textarea id="experiencia" rows="3" cols="50" style="width: 99%;"></textarea><br>
+                        Intereses<br>
+                        <textarea id="intereses" rows="3" cols="50" style="width: 99%;"></textarea><br>
+                    </div>
                     <div id="galeria"></div>
+                    <p id="rutaGaleria" style="text-align: center;"></p>
+                    <button id="botonAbrirCarpeta" class="btn btn-positive">📂 Abrir carpeta multimedia</button>
                 </div>
             </div>
         </div>
 
         <footer class="toolbar toolbar-footer" style="text-align: center;">
-            <button id="botonIzquierda" class="btn btn-positive">◄</button>
-            <button id="botonDerecha" class="btn btn-positive">►</button>
+            <button id="botonIzquierda" class="btn btn-positive">◄ Anterior</button>
+            <button id="botonDerecha" class="btn btn-positive">Siguiente ►</button>
             <button id="botonBorrar" class="btn btn-warning" style="float: right;">🔥 Borrar registro</button>
         </footer>
     </div>

@@ -76,6 +76,11 @@ function actualiza() {
   ruta = miArray[pos].ruta;
   rutaGaleria.innerHTML = ruta;
 
+  // Crea la carpeta multimedia de la persona si no existe
+  if (!fs.existsSync(ruta)) {
+    fs.mkdirSync(ruta);
+  }
+
   actualizaGaleria();
 }
 

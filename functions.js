@@ -53,11 +53,29 @@ colorBtnDesplazamiento();
 
 // FUNCIONES
 
-function guarda() {
-  // Guarda el array
-  fs.writeFileSync('./data/catalogo.json', JSON.stringify(miArray));
-  fs.close;
+function actualiza() {
+  alias.value = miArray[pos].alias;
+  titulo.innerHTML = alias.value;
+  nombre.value = miArray[pos].nombre;
+  apellidos.value = miArray[pos].apellidos;
+  email.value = miArray[pos].email;
+  telf.value = miArray[pos].telf;
+  rrss.value = miArray[pos].rrss;
+  dni.value = miArray[pos].dni;
+  direccion.value = miArray[pos].direccion;
+  ruta = miArray[pos].ruta;
+  rutaGaleria.innerHTML = ruta;
+
+  actualizaGaleria();
 }
+
+
+function actualizarPagina() {
+  // Actualiza la galería y la página actual
+  cargarGaleria(paginaActual);
+}
+
+
 // Prepara el visor multimedia
 function actualizaGaleria() {
   fs.promises.readdir(ruta)
@@ -104,21 +122,29 @@ function actualizaGaleria() {
     .catch(error => console.error(error));
 }
 
-function actualiza() {
-  alias.value = miArray[pos].alias;
-  titulo.innerHTML = alias.value;
-  nombre.value = miArray[pos].nombre;
-  apellidos.value = miArray[pos].apellidos;
-  email.value = miArray[pos].email;
-  telf.value = miArray[pos].telf;
-  rrss.value = miArray[pos].rrss;
-  dni.value = miArray[pos].dni;
-  direccion.value = miArray[pos].direccion;
-  ruta = miArray[pos].ruta;
-  rutaGaleria.innerHTML = ruta;
 
-  actualizaGaleria();
+function borrarCarpetaRecursivamente(ruta) {
+  if (fs.existsSync(ruta)) {
+    fs.readdirSync(ruta).forEach((archivo, index) => {
+      const rutaArchivo = path.join(ruta, archivo);
+
+      if (fs.lstatSync(rutaArchivo).isDirectory()) {
+        // Si es una carpeta, llamar recursivamente para borrarla
+        borrarCarpetaRecursivamente(rutaArchivo);
+      } else {
+        // Si es un archivo, borrarlo
+        fs.unlinkSync(rutaArchivo);
+      }
+    });
+
+    // Después de borrar todos los archivos de la carpeta, borrar la carpeta misma
+    fs.rmdirSync(ruta);
+    console.log(`Carpeta borrada: ${ruta}`);
+  } else {
+    console.log(`La carpeta no existe: ${ruta}`);
+  }
 }
+
 
 function cargarGaleria(pagina) {
   galeriaDiv.innerHTML = ''; // Limpiar el contenido actual
@@ -135,6 +161,38 @@ function cargarGaleria(pagina) {
 
     galeriaDiv.innerHTML += elemento;
   });
+}
+
+
+function colorBtnDesplazamiento() {
+  if (pos == 0) {
+    botonIzquierda.disabled = true;
+    botonIzquierda.classList.value = "btn btn-negative";
+  } else {
+    botonIzquierda.disabled = false;
+    botonIzquierda.classList.value = "btn btn-positive";
+  }
+  if (pos == miArray.length - 1) {
+    botonDerecha.disabled = true;
+    botonDerecha.classList.value = "btn btn-negative";
+  } else {
+    botonDerecha.disabled = false;
+    botonDerecha.classList.value = "btn btn-positive";
+  }
+}
+
+function guarda() {
+  // Guarda el array
+  fs.writeFileSync('./data/catalogo.json', JSON.stringify(miArray));
+  fs.close;
+}
+
+function irAPagina(pagina) {
+  // Valida que la página solicitada sea válida
+  if (pagina >= 1 && pagina <= Math.ceil(archivos.length / archivosPorPagina)) {
+    paginaActual = pagina;
+    actualizarPagina();
+  }
 }
 
 function mostrarEnGrande(filePath, extension) {
@@ -165,35 +223,7 @@ function mostrarEnGrande(filePath, extension) {
   document.body.appendChild(modal);
 }
 
-function actualizarPagina() {
-  // Actualiza la galería y la página actual
-  cargarGaleria(paginaActual);
-}
 
-function irAPagina(pagina) {
-  // Valida que la página solicitada sea válida
-  if (pagina >= 1 && pagina <= Math.ceil(archivos.length / archivosPorPagina)) {
-    paginaActual = pagina;
-    actualizarPagina();
-  }
-}
-
-function colorBtnDesplazamiento() {
-  if (pos == 0) {
-    botonIzquierda.disabled = true;
-    botonIzquierda.classList.value = "btn btn-negative";
-  } else {
-    botonIzquierda.disabled = false;
-    botonIzquierda.classList.value = "btn btn-positive";
-  }
-  if (pos == miArray.length - 1) {
-    botonDerecha.disabled = true;
-    botonDerecha.classList.value = "btn btn-negative";
-  } else {
-    botonDerecha.disabled = false;
-    botonDerecha.classList.value = "btn btn-positive";
-  }
-}
 
 
 //LISTENERS
@@ -211,20 +241,8 @@ botonAbrirCarpeta.addEventListener('click', () => {
 
 });
 
+
 botonNuevo.addEventListener('click', () => {
-
-  const persona = {
-    "alias": alias.value,
-    "nombre": nombre.value,
-    "apellidos": apellidos.value,
-    "email": email.value,
-    "telf": telf.value,
-    "rrss": rrss.value,
-    "dni": dni.value,
-    "direccion": direccion.value,
-    "ruta": ruta
-  };
-
   // Obtiene componentes individuales de la fecha y hora
   const fechaHoraActual = new Date();
   const año = fechaHoraActual.getFullYear();
@@ -238,13 +256,29 @@ botonNuevo.addEventListener('click', () => {
   ruta = `${año}${mes}${dia}${horas}${minutos}${segundos}`;
   ruta = "./data/" + ruta + "/";
 
+  const persona = {
+    "alias": alias.value,
+    "nombre": nombre.value,
+    "apellidos": apellidos.value,
+    "email": email.value,
+    "telf": telf.value,
+    "rrss": rrss.value,
+    "dni": dni.value,
+    "direccion": direccion.value,
+    "ruta": ruta
+  };
+
   //en pos no elimino nada y agrego persona
   miArray.splice(pos,0,persona)
   // Crea la carpeta multimedia de la persona
   if (!fs.existsSync(ruta)) {
     fs.mkdirSync(ruta);
   }
+
+  guarda();
+  actualiza();
 })
+
 
 botonGuardar.addEventListener('click', () => {
   // Agrega al array el elemento actual
@@ -273,6 +307,7 @@ botonGuardar.addEventListener('click', () => {
   botonBorrar.disabled = false;
 })
 
+
 botonDerecha.addEventListener('click', () => {
   if (pos < miArray.length - 1) {
     pos++;
@@ -284,6 +319,7 @@ botonDerecha.addEventListener('click', () => {
   botonBorrar.classList.value = "btn btn-warning";
   botonBorrar.disabled = false;
 })
+
 
 botonIzquierda.addEventListener('click', () => {
   if (pos > 0) {
@@ -297,6 +333,7 @@ botonIzquierda.addEventListener('click', () => {
   botonBorrar.disabled = false;
 })
 
+
 botonBorrar.addEventListener('click', () => {
   const options = {
     type: 'question',
@@ -308,6 +345,7 @@ botonBorrar.addEventListener('click', () => {
   let respuestaUsuario = dialog.showMessageBoxSync(options);
 
   if (respuestaUsuario == 0) {
+    //borrarCarpetaRecursivamente(miArray[pos].ruta);
     miArray.splice(pos, 1)
     pos = 0;
     actualiza();

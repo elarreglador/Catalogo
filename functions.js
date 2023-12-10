@@ -313,6 +313,7 @@ botonNuevo.addEventListener('click', () => {
 
   guarda();
   actualiza();
+  colorBtnDesplazamiento()
 })
 
 
@@ -392,6 +393,7 @@ botonBorrar.addEventListener('click', () => {
     actualiza();
     guarda();
   }
+  colorBtnDesplazamiento();
 })
 
 nacimiento.addEventListener('change', () => {

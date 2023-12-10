@@ -381,7 +381,7 @@ botonBorrar.addEventListener('click', () => {
   let respuestaUsuario = dialog.showMessageBoxSync(options);
 
   if (respuestaUsuario == 0) {
-    //borrarCarpetaRecursivamente(miArray[pos].ruta);
+    borrarCarpetaRecursivamente(miArray[pos].ruta);
     miArray.splice(pos, 1)
     pos = 0;
     actualiza();

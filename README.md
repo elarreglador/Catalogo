@@ -1,4 +1,3 @@
-CATALOGO
 ![Imagen](https://github.com/elarreglador/Catalogo/blob/master/SCREENSHOTS/Social%20preview.png)
 
 
@@ -8,6 +7,7 @@ ACERCA DEL AUTOR
 
 David M.
 elarreglador@protonmail.cocm
+
 https://github.com/elarreglador
 
 

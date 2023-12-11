@@ -6,6 +6,7 @@ ACERCA DEL AUTOR
 ************************************
 
 David M.
+
 elarreglador@protonmail.cocm
 
 https://github.com/elarreglador
@@ -17,6 +18,15 @@ ACERCA DE LA APLICACION
 Este es un catalogo multiproposito para agencias de modelos, notas detectivescas, 
 informacion sobre personajes de cine o literatura, ayuda a RRHH o similares ya que 
 almacena imagenes, telefonos y otra informacion personal.
+
+![Imagen](https://github.com/elarreglador/Catalogo/blob/master/SCREENSHOTS/Captura%20de%20pantalla%20de%202023-12-11%2012-24-37.png)
+
+![Imagen](https://github.com/elarreglador/Catalogo/blob/master/SCREENSHOTS/Captura%20de%20pantalla%20de%202023-12-11%2012-26-45.png)
+
+![Imagen](https://github.com/elarreglador/Catalogo/blob/master/SCREENSHOTS/Captura%20de%20pantalla%20de%202023-12-11%2012-27-33.png)
+
+![Imagen](https://github.com/elarreglador/Catalogo/blob/master/SCREENSHOTS/Captura%20de%20pantalla%20de%202023-12-11%2012-28-36.png)
+
 
 
 ************************************
